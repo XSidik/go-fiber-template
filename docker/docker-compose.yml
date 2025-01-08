@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    container_name: gofiber_template
+    ports:
+      - "3000:3000"
+    env_file:
+      - ../.env
+    networks:
+      - gofiber-template
+
+networks:
+  gofiber-template:
+    external: true

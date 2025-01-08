@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:latest
+    container_name: redis_gofiber
+    networks:
+      - gofiber-template
+    ports:
+      - "6379:6379"
+    command: ["redis-server", "--requirepass", "admin123"]
+
+networks:
+  gofiber-template:
+    external: true

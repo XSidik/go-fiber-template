@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres_gofiber
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: gofiber-template
+    ports:
+      - "5432:5432"
+    networks:
+      - gofiber-template 
+
+networks:
+  gofiber-template:
+    external: true

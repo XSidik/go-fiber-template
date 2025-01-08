@@ -1,0 +1,39 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Output of the go coverage tool
+*.cover
+
+# Temporary files
+*.tmp
+*.temp
+
+# IDE/editor specific files
+.vscode/
+.idea/
+*.swp
+
+# Dependency directories
+vendor/
+node_modules/
+
+# Go specific files
+*.log
+*.lock
+# *.mod
+# *.sum
+
+# Docker specific files
+Dockerfile
+docker/
+.env.example
+README.md
+.gitignore
+.dockerignore
+.git
