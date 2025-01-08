@@ -1,6 +1,11 @@
 # Start with the official Golang image
-FROM golang:1.18-alpine AS builder
+FROM golang:1.23-alpine AS builder
 
+ENV GO111MODULE=on \
+    CGO_ENABLED=0 \
+    GOOS=linux \
+    GOARCH=amd64
+    
 # Set the Current Working Directory inside the container
 WORKDIR /app
 
@@ -14,16 +19,10 @@ RUN go mod download
 COPY . .
 
 # Build the Go app
-RUN go build -o main .
-
-# Start a new stage from scratch
-FROM alpine:latest
-
-# Copy the Pre-built binary file from the previous stage
-COPY --from=builder /app/main /app/main
+RUN go build -o main
 
 # Expose port 3000 to the outside world
 EXPOSE 3000
 
 # Command to run the executable
-CMD ["/app/main"]
+CMD ["./main"]
