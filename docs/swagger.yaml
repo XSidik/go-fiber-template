@@ -1,0 +1,153 @@
+basePath: /
+definitions:
+  models.APIResponse:
+    properties:
+      data: {}
+      errors: {}
+      message:
+        type: string
+      meta: {}
+      status:
+        type: boolean
+    type: object
+  models.Login:
+    properties:
+      password:
+        type: string
+      user_name:
+        maxLength: 32
+        minLength: 3
+        type: string
+    required:
+    - password
+    - user_name
+    type: object
+  models.Register:
+    properties:
+      password:
+        maxLength: 15
+        minLength: 6
+        type: string
+      user_name:
+        maxLength: 32
+        minLength: 3
+        type: string
+    required:
+    - password
+    - user_name
+    type: object
+host: localhost:3000
+info:
+  contact:
+    name: go-fiber template API Support
+  description: This is an API template developed using the GoFiber framework in Golang,
+    with PostgreSQL as the database, JWT for authentication, and Redis for caching.
+  title: go-fiber template API
+  version: "1.0"
+paths:
+  /api/v1/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Login a user with a username and password
+      parameters:
+      - description: User Data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.Login'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Login successful
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "404":
+          description: User not found
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "500":
+          description: Error generating token
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      summary: Login a user
+      tags:
+      - auth
+  /api/v1/auth/logout:
+    get:
+      description: Logout a user and delete their tokens from Redis
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Logout successful
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "500":
+          description: Error during logout
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      summary: Logout a user
+      tags:
+      - auth
+  /api/v1/auth/refresh-token:
+    get:
+      consumes:
+      - application/json
+      description: Refresh the access and refresh tokens for an authenticated user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Token refreshed successfully
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "500":
+          description: Error generating token
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      summary: Refresh user token
+      tags:
+      - auth
+  /api/v1/auth/register:
+    post:
+      consumes:
+      - application/json
+      description: Register a new user with a username and password
+      parameters:
+      - description: User Data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.Register'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User created successfully
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+        "400":
+          description: Invalid request
+          schema:
+            $ref: '#/definitions/models.APIResponse'
+      summary: Register a new user
+      tags:
+      - auth
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: bearer
+    type: apiKey
+swagger: "2.0"

@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/XSidik/go-fiber-template/internal/config"
+	"github.com/XSidik/go-fiber-template/internal/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -20,4 +21,8 @@ func Connect(cfg config.Config) {
 	if err != nil {
 		log.Fatalf("Error connecting to database: %v", err)
 	}
+}
+
+func Migrate(db *gorm.DB) {
+	db.AutoMigrate(&models.UserModel{})
 }
