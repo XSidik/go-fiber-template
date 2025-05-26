@@ -19,7 +19,7 @@ RUN go mod download
 COPY . .
 
 # Build the Go app
-RUN go build -o main
+RUN go build -o main ./cmd
 
 # Expose port 3000 to the outside world
 EXPOSE 3000

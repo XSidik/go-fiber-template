@@ -7,7 +7,3 @@ type UserModel struct {
 	UserName string `gorm:"unique" json:"user_name"`
 	Password string `json:"-"`
 }
-
-func Migrate(db *gorm.DB) {
-	db.AutoMigrate(&UserModel{})
-}
